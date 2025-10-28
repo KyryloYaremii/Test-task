@@ -1,0 +1,5 @@
+@Test_task_HostAddress = http://localhost:5268
+
+GET {{Test_task_HostAddress}}/
+
+###
