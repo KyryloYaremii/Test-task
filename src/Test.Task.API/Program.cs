@@ -79,17 +79,6 @@ app.UseExceptionHandler(exceptionHandlerApp =>
                     ).ExecuteAsync(context);
                     break;
 
-
-                 case DogNotFoundException ex:
-                     context.Response.StatusCode = StatusCodes.Status404NotFound;
-                    await Results.Problem(
-                        title: "A dog with such parameters does not exist.",
-                        detail: ex.Message,
-                        statusCode: StatusCodes.Status404NotFound
-                        ).ExecuteAsync(context);
-                     break;
-
-
                 default:
                     context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                     await Results.Problem(

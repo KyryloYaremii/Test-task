@@ -14,6 +14,6 @@ public class DogDto
     [Range(0, int.MaxValue, ErrorMessage = "Tail length cannot be a negative number.")]
     public int TailLength { get; set; }
 
-    [Range(1, int.MaxValue, ErrorMessage = "Weight must be a positive number.")]
+    [Range(0, int.MaxValue, ErrorMessage = "Weight must be a positive number.")]
     public int Weight { get; set; }
 }

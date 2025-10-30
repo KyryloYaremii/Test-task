@@ -1,4 +1,5 @@
 ﻿using Test.Task.Application.DTOs;
+using Test.Task.Application.Exceptions;
 using Test.Task.Application.Interfaces;
 using Test.Task.Domain.Entities;
 
@@ -20,6 +21,11 @@ public class CreateDogUseCase
 
         if (string.IsNullOrWhiteSpace(dto.Name))
             throw new ArgumentException("Dog name is required.", nameof(dto.Name));
+
+        if (await _repository.DogNameExistsAsync(dto.Name, cancellationToken))
+        {
+            throw new DuplicateDogNameException($"A dog with the name '{dto.Name}' already exists.");
+        }
 
         var dog = new Dog
         {

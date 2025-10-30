@@ -58,4 +58,9 @@ public class DogRepository : IDogRepository
     {
         return _context.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<bool> DogNameExistsAsync(string name, CancellationToken cancellationToken = default)
+    {
+        return await _context.Dogs.AnyAsync(d => d.Name == name, cancellationToken);
+    }
 }
