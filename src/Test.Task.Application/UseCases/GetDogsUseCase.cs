@@ -6,6 +6,7 @@ namespace Test.Task.Application.UseCases;
 public class GetDogsUseCase
 {
     private readonly IDogRepository _repository;
+
     private static readonly HashSet<string> AllowedSortFields = new()
         {
             "name", "color", "tail_length", "weight"
@@ -23,6 +24,16 @@ public class GetDogsUseCase
         int pageSize = 2,
         CancellationToken cancellationToken = default)
     {
+
+        if (pageNumber <= 0)
+        {
+            throw new ArgumentException("Page number must be a positive number.", nameof(pageNumber));
+        }
+        if (pageSize <= 0)
+        {
+            throw new ArgumentException("Page size must be a positive number.", nameof(pageSize));
+        }
+
         string? sortBy = null;
         bool desc = false;
 

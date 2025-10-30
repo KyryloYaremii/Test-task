@@ -12,4 +12,5 @@ public interface IDogRepository
     Task<Dog> AddDogAsync(Dog dog, CancellationToken cancellationToken = default);
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     Task<bool> DogNameExistsAsync(string name, CancellationToken cancellationToken = default);
+    Task<Dog?> GetDogByIdAsync(int id, CancellationToken cancellationToken = default);
 }

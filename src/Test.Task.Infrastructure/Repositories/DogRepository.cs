@@ -63,4 +63,11 @@ public class DogRepository : IDogRepository
     {
         return await _context.Dogs.AnyAsync(d => d.Name == name, cancellationToken);
     }
+
+    public async Task<Dog?> GetDogByIdAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await _context.Dogs
+            .AsNoTracking()
+            .FirstOrDefaultAsync(d => d.Id == id, cancellationToken);
+    }
 }

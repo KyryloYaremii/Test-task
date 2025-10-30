@@ -4,6 +4,8 @@ using Microsoft.OpenApi.Models;
 using Test.Task.Infrastructure.Data;
 using Test.Task.Application.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,18 @@ builder.Services.AddControllers();
 
 builder.Services.AddApplicationServices();
 
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    options.AddFixedWindowLimiter(policyName: "10-per-second", o =>
+    {
+        o.PermitLimit = 10;
+
+        o.Window = TimeSpan.FromSeconds(1);
+    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -31,6 +45,7 @@ builder.Services.AddSwaggerGen(options =>
         Description = "API for managing dogs."
     });
 });
+
 builder.Services.AddProblemDetails();
 
 var app = builder.Build();
@@ -73,10 +88,19 @@ app.UseExceptionHandler(exceptionHandlerApp =>
                 case DuplicateDogNameException ex:
                     context.Response.StatusCode = StatusCodes.Status409Conflict;
                     await Results.Problem(
-                        title: "Dog name conflict",
+                        title: "Dog name conflict.",
                         detail: ex.Message,
                         statusCode: StatusCodes.Status409Conflict
                     ).ExecuteAsync(context);
+                    break;
+
+                case DogNotFoundException ex:
+                    context.Response.StatusCode = StatusCodes.Status404NotFound;
+                    await Results.Problem(
+                        title: "Dog was not found.",
+                        detail: ex.Message,
+                        statusCode: StatusCodes.Status404NotFound
+                        ).ExecuteAsync(context);
                     break;
 
                 default:

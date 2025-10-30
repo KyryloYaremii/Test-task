@@ -13,6 +13,7 @@ public static class DependencyInjection
         services.AddScoped<IDogRepository, DogRepository>();
         services.AddScoped<GetDogsUseCase>();
         services.AddScoped<CreateDogUseCase>();
+        services.AddScoped<GetDogByIdUseCase>();
         return services;
     }
 }
