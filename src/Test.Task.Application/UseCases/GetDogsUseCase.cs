@@ -20,7 +20,7 @@ public class GetDogsUseCase
         string? attribute = null,
         string? order = null,
         int pageNumber = 1,
-        int pageSize = 100,
+        int pageSize = 2,
         CancellationToken cancellationToken = default)
     {
         string? sortBy = null;

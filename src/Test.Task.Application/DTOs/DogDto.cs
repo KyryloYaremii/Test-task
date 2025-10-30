@@ -1,9 +1,19 @@
-﻿namespace Test.Task.Application.DTOs;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Test.Task.Application.DTOs;
 
 public class DogDto
 {
-    public string Name { get; set; } = null!;
-    public string Color { get; set; } = null!;
+    [Required(ErrorMessage = "Dog name is required.")]
+    [StringLength(100, MinimumLength = 1)]
+    public required string Name { get; set; }
+
+    [Required(ErrorMessage = "Color is required.")]
+    public required string Color { get; set; }
+
+    [Range(0, int.MaxValue, ErrorMessage = "Tail length cannot be a negative number.")]
     public int TailLength { get; set; }
+
+    [Range(1, int.MaxValue, ErrorMessage = "Weight must be a positive number.")]
     public int Weight { get; set; }
 }

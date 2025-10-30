@@ -13,7 +13,7 @@ public class CreateDogUseCase
         _repository = repository;
     }
 
-    public async Task<DogDto> ExecuteAsync(DogDto dto, CancellationToken cancellationToken = default)
+    public async Task<Dog> ExecuteAsync(DogDto dto, CancellationToken cancellationToken = default)
     {
         if (dto == null)
             throw new ArgumentNullException(nameof(dto));
@@ -31,6 +31,7 @@ public class CreateDogUseCase
 
         await _repository.AddDogAsync(dog, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);
-        return dto;
+
+        return dog;
     }
 }

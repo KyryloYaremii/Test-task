@@ -41,6 +41,6 @@ public class DogsController : ControllerBase
     public async Task<IActionResult> CreateDogAsync([FromBody] DogDto dto, CancellationToken cancellationToken)
     {
         await _createDog.ExecuteAsync(dto, cancellationToken);
-        return CreatedAtAction(nameof(GetDogsAsync), null);
+        return Ok("Dog was created successfuly");
     }
 }

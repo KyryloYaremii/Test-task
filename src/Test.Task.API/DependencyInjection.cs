@@ -4,7 +4,7 @@ using Test.Task.Application.Interfaces;
 using Test.Task.Infrastructure.Repositories;
 using Test.Task.Application.UseCases;
 
-namespace BookStore.Web.Api.Extensions;
+namespace Test.Task.Api.DI;
 
 public static class DependencyInjection
 {
